@@ -2,8 +2,12 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "../../styles/theme";
 
 export const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    backgroundColor: COLORS.GRAY_900,
+  },
   container: {
-    flex: 1,
+    flexGrow: 1,
   },
   header: {
     width: "100%",
@@ -16,5 +20,14 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 12,
     color: COLORS.WHITE,
+  },
+  coffee: {
+    position: "absolute",
+    top: 42,
+    right: -24,
+    zIndex: 2,
+  },
+  main: {
+    paddingTop: 280,
   },
 });

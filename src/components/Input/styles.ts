@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.GRAY_200,
     borderRadius: 4,
     gap: 8,
+    zIndex: 3,
   },
   input: {
     flex: 1,
