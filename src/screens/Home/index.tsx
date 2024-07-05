@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Image,
   Keyboard,
@@ -23,6 +23,16 @@ import { coffees } from "../../data/coffees";
 export default function Home() {
   const insets = useSafeAreaInsets();
   const statusBarHeight = insets.top;
+
+  const sectionListRef = useRef(null);
+
+  const scrollToSection = (sectionIndex: number) => {
+    sectionListRef.current?.scrollToLocation({
+      sectionIndex,
+      itemIndex: 0,
+      animated: true,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,15 +74,27 @@ export default function Home() {
           Nossos cafés
         </Text>
         <View style={styles.filters}>
-          <TouchableOpacity style={styles.filterOption} activeOpacity={0.5}>
+          <TouchableOpacity
+            style={styles.filterOption}
+            activeOpacity={0.5}
+            onPress={() => scrollToSection(0)}
+          >
             <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
               TRADICIONAIS
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterOption} activeOpacity={0.5}>
+          <TouchableOpacity
+            style={styles.filterOption}
+            activeOpacity={0.5}
+            onPress={() => scrollToSection(1)}
+          >
             <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>DOCES</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterOption} activeOpacity={0.5}>
+          <TouchableOpacity
+            style={styles.filterOption}
+            activeOpacity={0.5}
+            onPress={() => scrollToSection(2)}
+          >
             <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
               ESPECIAIS
             </Text>
@@ -81,6 +103,7 @@ export default function Home() {
       </View>
 
       <SectionList
+        ref={sectionListRef}
         sections={coffees}
         keyExtractor={(item) => item.title}
         stickySectionHeadersEnabled={false}

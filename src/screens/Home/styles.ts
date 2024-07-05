@@ -63,9 +63,10 @@ export const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: COLORS.GRAY_400,
+    paddingTop: 8,
   },
   listContainer: {
-    paddingTop: 16,
+    paddingTop: 8,
     paddingHorizontal: 32,
     gap: 32,
   },
