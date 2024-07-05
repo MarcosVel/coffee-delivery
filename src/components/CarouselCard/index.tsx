@@ -29,7 +29,11 @@ export default function CarouselCard() {
       keyExtractor={(item) => item.title}
       renderItem={({ item }) => (
         <View style={styles.container}>
-          <Image source={item.image} style={styles.image} />
+          <Image
+            source={item.image}
+            style={styles.image}
+            resizeMode="contain"
+          />
 
           <View style={styles.tag}>
             <Text style={styles.tagText}>{item.type}</Text>

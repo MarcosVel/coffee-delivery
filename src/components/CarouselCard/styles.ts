@@ -30,6 +30,8 @@ export const styles = StyleSheet.create({
     elevation: 2,
   },
   image: {
+    width: 64,
+    height: 64,
     marginTop: -16,
     marginBottom: 16,
   },

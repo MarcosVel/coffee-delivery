@@ -2,12 +2,13 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "../../styles/theme";
 
 export const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    backgroundColor: COLORS.GRAY_900,
-  },
+  // scrollContainer: {
+  //   flexGrow: 1,
+  //   backgroundColor: COLORS.GRAY_900,
+  // },
   container: {
     flexGrow: 1,
+    backgroundColor: COLORS.GRAY_900,
   },
   header: {
     width: "100%",
@@ -28,6 +29,44 @@ export const styles = StyleSheet.create({
     zIndex: 2,
   },
   main: {
-    paddingTop: 280,
+    marginTop: 280,
+  },
+  listFilter: {
+    height: 90,
+    paddingHorizontal: 32,
+    justifyContent: "center",
+    backgroundColor: COLORS.GRAY_900,
+    shadowColor: COLORS.GRAY_500,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
+    zIndex: 1,
+    gap: 12,
+  },
+  filterHeaderTitle: {
+    color: COLORS.GRAY_300,
+  },
+  filters: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  filterOption: {
+    height: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 12,
+    borderRadius: 100,
+    borderColor: COLORS.PURPLE,
+    borderWidth: 1,
+  },
+  sectionTitle: {
+    color: COLORS.GRAY_400,
+  },
+  listContainer: {
+    paddingTop: 16,
+    paddingHorizontal: 32,
+    gap: 32,
   },
 });
