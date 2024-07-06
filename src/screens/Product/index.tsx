@@ -1,9 +1,10 @@
 import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
+import cup from "../../assets/images/cup.png";
+import { Select } from "../../components";
 import { FONT } from "../../styles/theme";
 import { styles } from "./styles";
-import cup from "../../assets/images/cup.png";
 
 type ParamsProps = {
   title: string;
@@ -43,6 +44,8 @@ export default function Product() {
         <Text style={[FONT.textSm, styles.footerText]}>
           Selecione o tamanho:
         </Text>
+
+        <Select />
       </View>
     </SafeAreaView>
   );
