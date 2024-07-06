@@ -1,12 +1,23 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useRef } from "react";
-import { Dimensions, FlatList, Image, Text, View } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { carousel } from "../../data/carousel";
+import { AppNavigationProps } from "../../routes/app.routes";
 import { FONT } from "../../styles/theme";
 import { CARD_WIDTH, LIST_GAP, styles } from "./styles";
 
 const { width } = Dimensions.get("window");
 
 export default function CarouselCard() {
+  const navigation = useNavigation<AppNavigationProps>();
+
   const flatListRef = useRef(null);
   const itemWidth = CARD_WIDTH + LIST_GAP;
   const snapOffset = (width - itemWidth) / 2;
@@ -28,7 +39,17 @@ export default function CarouselCard() {
       data={carousel}
       keyExtractor={(item) => item.title}
       renderItem={({ item }) => (
-        <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() =>
+            navigation.navigate("product", {
+              title: item.title,
+              description: item.description,
+              price: item.price,
+              type: item.type,
+            })
+          }
+        >
           <Image
             source={item.image}
             style={styles.image}
@@ -50,7 +71,7 @@ export default function CarouselCard() {
               {item.price.toFixed(2).replace(".", ",")}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
       contentContainerStyle={styles.listContainer}
       style={{ flexGrow: 0 }}
