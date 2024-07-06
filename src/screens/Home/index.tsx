@@ -115,6 +115,7 @@ export default function Home() {
             image={item.image}
             description={item.description}
             price={item.price}
+            type={item.type}
           />
         )}
         contentContainerStyle={styles.listContainer}

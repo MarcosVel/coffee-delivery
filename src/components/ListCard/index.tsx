@@ -1,13 +1,16 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { FONT } from "../../styles/theme";
+import { useNavigation } from "@react-navigation/native";
+import { AppNavigationProps } from "../../routes/app.routes";
 
 type ListCardProps = {
   title: string;
   image: any;
   description: string;
   price: number;
+  type: string;
 };
 
 export default function ListCard({
@@ -15,9 +18,23 @@ export default function ListCard({
   image,
   description,
   price,
+  type,
 }: ListCardProps) {
+  const navigation = useNavigation<AppNavigationProps>();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() =>
+        navigation.navigate("product", {
+          title,
+          description,
+          price,
+          type,
+        })
+      }
+      activeOpacity={0.7}
+    >
       <Image source={image} style={styles.image} />
 
       <View style={styles.info}>
@@ -33,6 +50,6 @@ export default function ListCard({
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

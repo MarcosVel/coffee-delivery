@@ -3,15 +3,24 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT } from "../../styles/theme";
 import { styles } from "./styles";
 
-export default function Select() {
+type SelectProps = {
+  onSelect: (selectValue: number) => void;
+};
+
+export default function Select({ onSelect }: SelectProps) {
   const [selected, setSelected] = useState(0);
+
+  function handleSelection(selectValue: number) {
+    setSelected(selectValue);
+    onSelect(selectValue);
+  }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={selected === 114 ? styles.selected : styles.select}
         activeOpacity={0.4}
-        onPress={() => setSelected(114)}
+        onPress={() => handleSelection(114)}
       >
         <Text
           style={
@@ -27,7 +36,7 @@ export default function Select() {
       <TouchableOpacity
         style={selected === 140 ? styles.selected : styles.select}
         activeOpacity={0.4}
-        onPress={() => setSelected(140)}
+        onPress={() => handleSelection(140)}
       >
         <Text
           style={
@@ -43,7 +52,7 @@ export default function Select() {
       <TouchableOpacity
         style={selected === 227 ? styles.selected : styles.select}
         activeOpacity={0.4}
-        onPress={() => setSelected(227)}
+        onPress={() => handleSelection(227)}
       >
         <Text
           style={

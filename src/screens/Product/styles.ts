@@ -58,4 +58,30 @@ export const styles = StyleSheet.create({
     color: COLORS.GRAY_400,
     marginBottom: 8,
   },
+  addCoffee: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: COLORS.GRAY_700,
+    borderRadius: 6,
+    marginTop: 20,
+    padding: 8,
+    gap: 16,
+  },
+  amount: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 4,
+  },
+  amountButton: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  amountText: {
+    color: COLORS.GRAY_100,
+    textAlign: "center",
+  },
 });

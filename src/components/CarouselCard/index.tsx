@@ -49,6 +49,7 @@ export default function CarouselCard() {
               type: item.type,
             })
           }
+          activeOpacity={0.9}
         >
           <Image
             source={item.image}
