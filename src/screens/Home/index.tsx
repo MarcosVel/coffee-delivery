@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import {
   Image,
   Keyboard,
-  ScrollView,
   SectionList,
   StatusBar,
   Text,
@@ -16,9 +15,9 @@ import {
 } from "react-native-safe-area-context";
 import coffee from "../../assets/images/coffee.png";
 import { CarouselCard, Header, Input, ListCard } from "../../components";
+import { coffees } from "../../data/coffees";
 import { COLORS, FONT } from "../../styles/theme";
 import { styles } from "./styles";
-import { coffees } from "../../data/coffees";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
@@ -116,6 +115,7 @@ export default function Home() {
             image={item.image}
             description={item.description}
             price={item.price}
+            type={item.type}
           />
         )}
         contentContainerStyle={styles.listContainer}
