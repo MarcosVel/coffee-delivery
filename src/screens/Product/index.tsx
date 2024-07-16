@@ -1,16 +1,11 @@
-import { useRoute } from "@react-navigation/native";
-import { Minus, Plus } from "phosphor-react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
-import {
-  Image,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, SafeAreaView, Text, View } from "react-native";
 import cup from "../../assets/images/cup.png";
-import { Button, Select } from "../../components";
-import { COLORS, FONT } from "../../styles/theme";
+import smoke from "../../assets/images/smoke3.png";
+import { Amount, Button, Select } from "../../components";
+import { AppNavigationProps } from "../../routes/app.routes";
+import { FONT } from "../../styles/theme";
 import { styles } from "./styles";
 
 type ParamsProps = {
@@ -21,6 +16,7 @@ type ParamsProps = {
 };
 
 export default function Product() {
+  const navigation = useNavigation<AppNavigationProps>();
   const { params } = useRoute();
   const { title, description, price, type } = params as ParamsProps;
 
@@ -50,6 +46,9 @@ export default function Product() {
 
         <Text style={[FONT.textMd, styles.description]}>{description}</Text>
 
+        <View style={styles.smokeView}>
+          <Image source={smoke} style={styles.smoke} resizeMode="contain" />
+        </View>
         <Image source={cup} style={styles.cup} />
       </View>
 
@@ -61,19 +60,13 @@ export default function Product() {
         <Select onSelect={selectSize} />
 
         <View style={styles.addCoffee}>
-          <View style={styles.amount}>
-            <TouchableOpacity style={styles.amountButton} activeOpacity={0.5}>
-              <Minus color={COLORS.PURPLE} size={20} />
-            </TouchableOpacity>
+          <Amount />
 
-            <Text style={[FONT.textMd, styles.amountText]}>1</Text>
-
-            <TouchableOpacity style={styles.amountButton} activeOpacity={0.5}>
-              <Plus color={COLORS.PURPLE} size={20} />
-            </TouchableOpacity>
-          </View>
-
-          <Button title="ADICIONAR" disabled={!sizeSelected} />
+          <Button
+            title="ADICIONAR"
+            disabled={!sizeSelected}
+            onPress={() => navigation.navigate("cart")}
+          />
         </View>
       </View>
     </SafeAreaView>

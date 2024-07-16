@@ -46,9 +46,18 @@ export const styles = StyleSheet.create({
     color: COLORS.WHITE,
     paddingRight: 12,
   },
+  smokeView: {
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 2,
+  },
+  smoke: {
+    maxHeight: 200,
+  },
   cup: {
     marginTop: "auto",
     bottom: -60,
+    zIndex: 1,
   },
   footer: {
     paddingTop: 42,
@@ -67,21 +76,5 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     padding: 8,
     gap: 16,
-  },
-  amount: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 4,
-  },
-  amountButton: {
-    width: 36,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  amountText: {
-    color: COLORS.GRAY_100,
-    textAlign: "center",
   },
 });
