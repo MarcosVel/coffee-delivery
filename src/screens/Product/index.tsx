@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
+import { ProductProps } from "../../@types/typesDTO";
 import cup from "../../assets/images/cup.png";
 import smoke from "../../assets/images/smoke3.png";
 import { Amount, Button, Select } from "../../components";
@@ -8,23 +9,23 @@ import { AppNavigationProps } from "../../routes/app.routes";
 import { FONT } from "../../styles/theme";
 import { styles } from "./styles";
 
-type ParamsProps = {
-  title: string;
-  description: string;
-  price: number;
-  type: string;
-};
-
 export default function Product() {
   const navigation = useNavigation<AppNavigationProps>();
   const { params } = useRoute();
-  const { title, description, price, type } = params as ParamsProps;
+  const { image, title, description, price, type } = params as ProductProps;
 
   const [sizeSelected, setSizeSelected] = useState(0);
+  const [amount, setAmount] = useState(0);
 
   function selectSize(selectValue: number) {
     setSizeSelected(selectValue);
   }
+
+  function selectAmount(amountSelected: number) {
+    setAmount(amountSelected);
+  }
+
+  console.log("amount", amount);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -60,12 +61,20 @@ export default function Product() {
         <Select onSelect={selectSize} />
 
         <View style={styles.addCoffee}>
-          <Amount />
+          <Amount onChange={selectAmount} />
 
           <Button
             title="ADICIONAR"
-            disabled={!sizeSelected}
-            onPress={() => navigation.navigate("cart")}
+            disabled={!sizeSelected || amount === 0}
+            onPress={() =>
+              navigation.navigate("cart", {
+                image,
+                title,
+                price,
+                sizeSelected,
+                amount,
+              })
+            }
           />
         </View>
       </View>

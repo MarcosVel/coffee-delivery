@@ -7,17 +7,26 @@ import { styles } from "./styles";
 
 type AmountProps = {
   border?: boolean;
+  defaultValue?: number;
+  onChange: (amountSelected: number) => void;
 };
 
-export default function Amount({ border }: AmountProps) {
-  const [value, setValue] = useState(0);
+export default function Amount({
+  border,
+  defaultValue = 0,
+  onChange,
+}: AmountProps) {
+  const [value, setValue] = useState(0 || defaultValue);
 
   function handleAmount(type?: string) {
     if (type === "minus") {
-      return setValue((prev) => prev - 1);
+      setValue((prev) => prev - 1);
+      onChange(value - 1);
+      return;
     }
 
     setValue((prev) => prev + 1);
+    onChange(value + 1);
   }
 
   return (

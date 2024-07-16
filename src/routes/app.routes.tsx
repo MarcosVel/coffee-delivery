@@ -11,8 +11,15 @@ import { COLORS } from "../styles/theme";
 type AppRoutes = {
   home: undefined;
   confirmation: undefined;
-  cart: undefined;
+  cart: {
+    image: number;
+    title: string;
+    price: number;
+    sizeSelected: number;
+    amount: number;
+  };
   product: {
+    image: number;
     title: string;
     description: string;
     price: number;
