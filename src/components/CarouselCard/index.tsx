@@ -18,14 +18,14 @@ const { width } = Dimensions.get("window");
 export default function CarouselCard() {
   const navigation = useNavigation<AppNavigationProps>();
 
-  const flatListRef = useRef(null);
+  const flatListRef = useRef<FlatList>(null);
   const itemWidth = CARD_WIDTH + LIST_GAP;
   const snapOffset = (width - itemWidth) / 2;
 
-  const handleScroll = (event) => {
+  const handleScroll = (event: any) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.floor((offsetX + snapOffset) / itemWidth);
-    flatListRef.current.scrollToIndex({
+    flatListRef.current?.scrollToIndex({
       index,
       animated: true,
       viewOffset: snapOffset,
@@ -43,6 +43,7 @@ export default function CarouselCard() {
           style={styles.container}
           onPress={() =>
             navigation.navigate("product", {
+              image: item.image,
               title: item.title,
               description: item.description,
               price: item.price,
