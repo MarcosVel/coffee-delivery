@@ -1,13 +1,14 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Image, SafeAreaView, Text, View } from "react-native";
-import { ProductProps } from "../../@types/typesDTO";
+import { Alert, Image, SafeAreaView, Text, View } from "react-native";
+import { CartProps, ProductProps } from "../../@types/typesDTO";
 import cup from "../../assets/images/cup.png";
 import smoke from "../../assets/images/smoke3.png";
 import { Amount, Button, Select } from "../../components";
 import { AppNavigationProps } from "../../routes/app.routes";
 import { FONT } from "../../styles/theme";
 import { styles } from "./styles";
+import { cartAdd } from "../../storage/cartStorage";
 
 export default function Product() {
   const navigation = useNavigation<AppNavigationProps>();
@@ -25,7 +26,15 @@ export default function Product() {
     setAmount(amountSelected);
   }
 
-  console.log("amount", amount);
+  async function handleAddToCart(item: CartProps) {
+    await cartAdd(item)
+      .then(() => {
+        navigation.navigate("cart");
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -67,7 +76,7 @@ export default function Product() {
             title="ADICIONAR"
             disabled={!sizeSelected || amount === 0}
             onPress={() =>
-              navigation.navigate("cart", {
+              handleAddToCart({
                 image,
                 title,
                 price,
