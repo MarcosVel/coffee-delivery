@@ -25,3 +25,15 @@ export async function cartAdd(newItem: CartProps) {
     throw error;
   }
 }
+
+export async function cartRemove(id: string) {
+  try {
+    const response = await cartGetAll();
+    const updatedCartItems = response.filter((item) => item.id !== id);
+
+    const jsonValue = JSON.stringify(updatedCartItems);
+    await AsyncStorage.setItem(CART_COLLECTION, jsonValue);
+  } catch (error) {
+    throw error;
+  }
+}

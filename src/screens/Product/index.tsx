@@ -13,7 +13,7 @@ import { cartAdd } from "../../storage/cartStorage";
 export default function Product() {
   const navigation = useNavigation<AppNavigationProps>();
   const { params } = useRoute();
-  const { image, title, description, price, type } = params as ProductProps;
+  const { id, image, title, description, price, type } = params as ProductProps;
 
   const [sizeSelected, setSizeSelected] = useState(0);
   const [amount, setAmount] = useState(0);
@@ -77,6 +77,7 @@ export default function Product() {
             disabled={!sizeSelected || amount === 0}
             onPress={() =>
               handleAddToCart({
+                id,
                 image,
                 title,
                 price,

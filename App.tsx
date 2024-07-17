@@ -1,8 +1,10 @@
+import "react-native-gesture-handler";
 import { Baloo2_700Bold } from "@expo-google-fonts/baloo-2";
 import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Routes from "./src/routes";
 
 export default function App() {
@@ -22,5 +24,9 @@ export default function App() {
     return null;
   }
 
-  return <Routes />;
+  return (
+    <GestureHandlerRootView>
+      <Routes />
+    </GestureHandlerRootView>
+  );
 }

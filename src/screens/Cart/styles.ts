@@ -27,4 +27,10 @@ export const styles = StyleSheet.create({
     alignItems: "baseline",
     marginBottom: 16,
   },
+  trash: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.RED_LIGHT,
+    paddingHorizontal: 40,
+  },
 });

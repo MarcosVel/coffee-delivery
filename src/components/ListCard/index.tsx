@@ -7,6 +7,7 @@ import { FONT } from "../../styles/theme";
 import { styles } from "./styles";
 
 export default function ListCard({
+  id,
   title,
   image,
   description,
@@ -20,6 +21,7 @@ export default function ListCard({
       style={styles.container}
       onPress={() =>
         navigation.navigate("product", {
+          id,
           image,
           title,
           description,

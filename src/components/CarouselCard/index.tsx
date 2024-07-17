@@ -37,12 +37,13 @@ export default function CarouselCard() {
       ref={flatListRef}
       horizontal
       data={carousel}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <TouchableOpacity
           style={styles.container}
           onPress={() =>
             navigation.navigate("product", {
+              id: item.id,
               image: item.image,
               title: item.title,
               description: item.description,

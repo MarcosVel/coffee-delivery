@@ -1,4 +1,5 @@
 type ProductProps = {
+  id: string;
   image: number;
   title: string;
   description: string;
@@ -7,6 +8,7 @@ type ProductProps = {
 };
 
 type CartProps = {
+  id: string;
   image: number;
   title: string;
   price: number;

@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.GRAY_700,
+    backgroundColor: COLORS.GRAY_900,
     gap: 20,
   },
   image: {

@@ -111,6 +111,7 @@ export default function Home() {
         )}
         renderItem={({ item }) => (
           <ListCard
+            id={item.id}
             title={item.title}
             image={item.image}
             description={item.description}

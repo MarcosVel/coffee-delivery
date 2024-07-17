@@ -1,12 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView, Text, View } from "react-native";
+import { Trash } from "phosphor-react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  FlatList,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Swipeable } from "react-native-gesture-handler";
+import Animated, {
+  LinearTransition,
+  SlideOutLeft,
+} from "react-native-reanimated";
 import { CartProps } from "../../@types/typesDTO";
 import { Button, CartItem, Loading } from "../../components";
-import { cartGetAll } from "../../storage/cartStorage";
-import { styles } from "./styles";
+import { cartGetAll, cartRemove } from "../../storage/cartStorage";
 import { COLORS, FONT } from "../../styles/theme";
+import { styles } from "./styles";
 
 export default function Cart() {
+  const swipeableRefs = useRef<Swipeable[]>([]);
+
   const [cart, setCart] = useState<CartProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -23,6 +37,15 @@ export default function Cart() {
     setIsLoading(false);
   }
 
+  async function removeFromCart(id: string) {
+    swipeableRefs.current?.[Number(id)].close();
+
+    setTimeout(async () => {
+      await cartRemove(id);
+      fetchHistory();
+    }, 500);
+  }
+
   useEffect(() => {
     fetchHistory();
   }, []);
@@ -31,19 +54,45 @@ export default function Cart() {
     return <Loading />;
   }
 
+  console.log("cart", cart);
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={cart}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <CartItem
-            image={item.image}
-            title={item.title}
-            price={item.price}
-            sizeSelected={item.sizeSelected}
-            amount={item.amount}
-          />
+          <Animated.View
+            key={item.id}
+            layout={LinearTransition.springify()}
+            exiting={SlideOutLeft}
+          >
+            <Swipeable
+              ref={(ref) => {
+                if (ref) {
+                  swipeableRefs.current[Number(item.id)] = ref;
+                }
+              }}
+              overshootLeft={false}
+              renderLeftActions={() => (
+                <TouchableOpacity
+                  style={styles.trash}
+                  onPress={() => removeFromCart(item.id)}
+                >
+                  <Trash color={COLORS.RED_DARK} size={28} />
+                </TouchableOpacity>
+              )}
+            >
+              <CartItem
+                id={item.id}
+                image={item.image}
+                title={item.title}
+                price={item.price}
+                sizeSelected={item.sizeSelected}
+                amount={item.amount}
+              />
+            </Swipeable>
+          </Animated.View>
         )}
       />
 

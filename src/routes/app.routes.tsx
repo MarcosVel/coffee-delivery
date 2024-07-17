@@ -13,6 +13,7 @@ type AppRoutes = {
   confirmation: undefined;
   cart: undefined;
   product: {
+    id: string;
     image: number;
     title: string;
     description: string;
