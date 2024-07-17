@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
   image: {
     width: 64,
     height: 64,
-    backgroundColor: COLORS.GRAY_700,
   },
   spaceBetween: {
     flexDirection: "row",

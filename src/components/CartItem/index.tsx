@@ -1,29 +1,44 @@
 import { Trash } from "phosphor-react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Image, Text, View } from "react-native";
+import { CartProps } from "../../@types/typesDTO";
 import { COLORS, FONT } from "../../styles/theme";
 import Amount from "../Amount";
 import IconButton from "../IconButton";
 import { styles } from "./styles";
 
-export default function CartItem() {
+export default function CartItem({
+  image,
+  title,
+  price,
+  sizeSelected,
+  amount,
+}: CartProps) {
+  const [amountSelected, setAmountSelected] = useState(amount);
+
+  function selectAmount(newAmount: number) {
+    setAmountSelected(newAmount);
+  }
+
+  function handlePrice() {
+    let totalPrice = (amountSelected * price).toFixed(2).replace(".", ",");
+    return totalPrice;
+  }
+
   return (
     <View style={styles.container}>
-      <Image
-        //  source={}
-        style={styles.image}
-      />
+      <Image source={image} style={styles.image} />
 
       <View style={{ flex: 1 }}>
         <View style={styles.spaceBetween}>
-          <Text style={[FONT.textMd, styles.title]}>Irlandes</Text>
-          <Text style={[FONT.titleSm, styles.title]}>{"RS 9,90"}</Text>
+          <Text style={[FONT.textMd, styles.title]}>{title}</Text>
+          <Text style={[FONT.titleSm, styles.title]}>RS {handlePrice()}</Text>
         </View>
 
-        <Text style={[FONT.textSm, styles.ml]}>{"227ml"}</Text>
+        <Text style={[FONT.textSm, styles.ml]}>{sizeSelected}ml</Text>
 
         <View style={styles.amount}>
-          <Amount border />
+          <Amount border onChange={selectAmount} defaultValue={amount} />
 
           <IconButton hasBgColor onPress={() => console.log("click")}>
             <Trash color={COLORS.PURPLE} size={20} />
