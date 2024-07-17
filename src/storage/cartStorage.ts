@@ -16,7 +16,10 @@ export async function cartGetAll() {
 
 export async function cartAdd(newItem: CartProps) {
   try {
-    const jsonValue = JSON.stringify([newItem]);
+    const response = await cartGetAll();
+    const storedCartItems = response ? response : [];
+
+    const jsonValue = JSON.stringify([...storedCartItems, newItem]);
     await AsyncStorage.setItem(CART_COLLECTION, jsonValue);
   } catch (error) {
     throw error;
