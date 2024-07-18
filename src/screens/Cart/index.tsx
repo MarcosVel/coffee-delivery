@@ -10,6 +10,8 @@ import {
 import { Swipeable } from "react-native-gesture-handler";
 import Animated, {
   LinearTransition,
+  SlideInDown,
+  SlideInUp,
   SlideOutLeft,
 } from "react-native-reanimated";
 import { CartProps } from "../../@types/typesDTO";
@@ -58,15 +60,13 @@ export default function Cart() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
+      <Animated.FlatList
         data={cart}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ flexGrow: 1 }}
+        itemLayoutAnimation={LinearTransition.springify()}
         renderItem={({ item }) => (
-          <Animated.View
-            key={item.id}
-            layout={LinearTransition.springify()}
-            exiting={SlideOutLeft}
-          >
+          <Animated.View entering={SlideInUp} exiting={SlideOutLeft}>
             <Swipeable
               ref={(ref) => {
                 if (ref) {
