@@ -1,5 +1,5 @@
 import { Minus, Plus } from "phosphor-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { COLORS, FONT } from "../../styles/theme";
 import IconButton from "../IconButton";
@@ -28,6 +28,10 @@ export default function Amount({
     setValue((prev) => prev + 1);
     onChange(value + 1);
   }
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   return (
     <View style={[styles.container, { borderWidth: border ? 1 : 0 }]}>

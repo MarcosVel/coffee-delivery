@@ -38,9 +38,13 @@ export default function CartItem({
         <Text style={[FONT.textSm, styles.ml]}>{sizeSelected}ml</Text>
 
         <View style={styles.amount}>
-          <Amount border onChange={selectAmount} defaultValue={amount} />
+          <Amount
+            border
+            onChange={selectAmount}
+            defaultValue={amountSelected}
+          />
 
-          <IconButton hasBgColor onPress={() => console.log("click")}>
+          <IconButton hasBgColor onPress={() => selectAmount(0)}>
             <Trash color={COLORS.PURPLE} size={20} />
           </IconButton>
         </View>
