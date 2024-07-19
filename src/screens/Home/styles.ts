@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.GRAY_900,
     shadowColor: COLORS.GRAY_500,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.4,
     shadowRadius: 2,
     elevation: 2,
     zIndex: 1,

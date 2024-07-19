@@ -1,25 +1,19 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { styles } from "./styles";
-import { FONT } from "../../styles/theme";
-import { useNavigation } from "@react-navigation/native";
+import { ProductProps } from "../../@types/typesDTO";
 import { AppNavigationProps } from "../../routes/app.routes";
-
-type ListCardProps = {
-  title: string;
-  image: any;
-  description: string;
-  price: number;
-  type: string;
-};
+import { FONT } from "../../styles/theme";
+import { styles } from "./styles";
 
 export default function ListCard({
+  id,
   title,
   image,
   description,
   price,
   type,
-}: ListCardProps) {
+}: ProductProps) {
   const navigation = useNavigation<AppNavigationProps>();
 
   return (
@@ -27,6 +21,8 @@ export default function ListCard({
       style={styles.container}
       onPress={() =>
         navigation.navigate("product", {
+          id,
+          image,
           title,
           description,
           price,

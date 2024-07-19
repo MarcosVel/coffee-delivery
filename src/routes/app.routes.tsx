@@ -1,18 +1,20 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "@react-navigation/native-stack";
-import { Cart, Confirmation, Home, Product } from "../screens";
 import { ArrowLeft } from "phosphor-react-native";
-import { COLORS } from "../styles/theme";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Cart, Confirmation, Home, Product } from "../screens";
+import { COLORS } from "../styles/theme";
 
 type AppRoutes = {
   home: undefined;
   confirmation: undefined;
   cart: undefined;
   product: {
+    id: string;
+    image: number;
     title: string;
     description: string;
     price: number;
@@ -36,7 +38,25 @@ export function AppRoutes() {
       <Screen
         name="cart"
         component={Cart}
-        options={{ headerTitle: "Carrinho" }}
+        options={{
+          headerTitle: "Carrinho",
+          headerTitleStyle: {
+            fontSize: 16,
+            color: COLORS.GRAY_200,
+            fontFamily: "Baloo2_700Bold",
+          },
+          headerStyle: {
+            backgroundColor: COLORS.GRAY_900,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{ marginLeft: 12 }}
+            >
+              <ArrowLeft size={24} color={COLORS.GRAY_100} />
+            </TouchableOpacity>
+          ),
+        }}
       />
       <Screen
         name="product"

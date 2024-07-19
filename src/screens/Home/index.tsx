@@ -23,7 +23,7 @@ export default function Home() {
   const insets = useSafeAreaInsets();
   const statusBarHeight = insets.top;
 
-  const sectionListRef = useRef(null);
+  const sectionListRef = useRef<SectionList>(null);
 
   const scrollToSection = (sectionIndex: number) => {
     sectionListRef.current?.scrollToLocation({
@@ -111,6 +111,7 @@ export default function Home() {
         )}
         renderItem={({ item }) => (
           <ListCard
+            id={item.id}
             title={item.title}
             image={item.image}
             description={item.description}
