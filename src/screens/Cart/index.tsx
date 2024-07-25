@@ -1,26 +1,22 @@
+import { useNavigation } from "@react-navigation/native";
 import { Trash } from "phosphor-react-native";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  FlatList,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import Animated, {
   LinearTransition,
-  SlideInDown,
   SlideInUp,
   SlideOutLeft,
 } from "react-native-reanimated";
 import { CartProps } from "../../@types/typesDTO";
 import { Button, CartItem, Loading } from "../../components";
+import { AppNavigationProps } from "../../routes/app.routes";
 import { cartGetAll, cartRemove } from "../../storage/cartStorage";
 import { COLORS, FONT } from "../../styles/theme";
 import { styles } from "./styles";
 
 export default function Cart() {
+  const { navigate } = useNavigation<AppNavigationProps>();
   const swipeableRefs = useRef<Swipeable[]>([]);
 
   const [cart, setCart] = useState<CartProps[]>([]);
@@ -55,8 +51,6 @@ export default function Cart() {
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log("cart", cart);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,7 +100,11 @@ export default function Cart() {
           </Text>
         </View>
 
-        <Button title="Confirmar pedido" variant="yellow" />
+        <Button
+          title="Confirmar pedido"
+          variant="yellow"
+          onPress={() => navigate("confirmation")}
+        />
       </View>
     </SafeAreaView>
   );
