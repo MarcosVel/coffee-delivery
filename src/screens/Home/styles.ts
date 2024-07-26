@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
     zIndex: 2,
   },
   main: {
+    flexGrow: 1,
     marginTop: 280,
   },
   listFilter: {

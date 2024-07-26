@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   Image,
   Keyboard,
@@ -9,6 +9,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import Animated, {
+  Easing,
+  FadeInDown,
+  SlideInDown,
+  SlideInRight,
+  SlideInUp,
+} from "react-native-reanimated";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -49,79 +56,100 @@ export default function Home() {
         style={{ flex: 1 }}
         onPress={() => Keyboard.dismiss()}
       >
-        <View style={[styles.header, { paddingTop: statusBarHeight }]}>
+        <Animated.View
+          entering={SlideInUp.duration(1000)}
+          style={[styles.header, { paddingTop: statusBarHeight }]}
+        >
           <Header />
 
-          <Text style={[FONT.titleMd, styles.title]}>
-            {"Encontre o café perfeito para\nqualquer hora do dia"}
-          </Text>
+          <Animated.View entering={FadeInDown.delay(900)}>
+            <Text style={[FONT.titleMd, styles.title]}>
+              {"Encontre o café perfeito para\nqualquer hora do dia"}
+            </Text>
 
-          <View>
-            <Input />
+            <View>
+              <Input />
 
-            <Image source={coffee} style={styles.coffee} />
-          </View>
-        </View>
+              <Image source={coffee} style={styles.coffee} />
+            </View>
+          </Animated.View>
+        </Animated.View>
       </TouchableWithoutFeedback>
 
       <View style={styles.main}>
-        <CarouselCard />
-      </View>
+        <Animated.View
+          entering={SlideInRight.duration(600)
+            .delay(1200)
+            .easing(Easing.out(Easing.ease))}
+        >
+          <CarouselCard />
+        </Animated.View>
 
-      <View style={styles.listFilter}>
-        <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
-          Nossos cafés
-        </Text>
-        <View style={styles.filters}>
-          <TouchableOpacity
-            style={styles.filterOption}
-            activeOpacity={0.5}
-            onPress={() => scrollToSection(0)}
-          >
-            <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-              TRADICIONAIS
+        <Animated.View
+          style={{ flex: 1 }}
+          entering={SlideInDown.duration(800)
+            .delay(1000)
+            .easing(Easing.out(Easing.ease))}
+        >
+          <View style={styles.listFilter}>
+            <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
+              Nossos cafés
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.filterOption}
-            activeOpacity={0.5}
-            onPress={() => scrollToSection(1)}
-          >
-            <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>DOCES</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.filterOption}
-            activeOpacity={0.5}
-            onPress={() => scrollToSection(2)}
-          >
-            <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-              ESPECIAIS
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+            <View style={styles.filters}>
+              <TouchableOpacity
+                style={styles.filterOption}
+                activeOpacity={0.5}
+                onPress={() => scrollToSection(0)}
+              >
+                <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                  TRADICIONAIS
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterOption}
+                activeOpacity={0.5}
+                onPress={() => scrollToSection(1)}
+              >
+                <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                  DOCES
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.filterOption}
+                activeOpacity={0.5}
+                onPress={() => scrollToSection(2)}
+              >
+                <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                  ESPECIAIS
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
-      <SectionList
-        ref={sectionListRef}
-        sections={coffees}
-        keyExtractor={(item) => item.title}
-        stickySectionHeadersEnabled={false}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={[FONT.titleXs, styles.sectionTitle]}>{title}</Text>
-        )}
-        renderItem={({ item }) => (
-          <ListCard
-            id={item.id}
-            title={item.title}
-            image={item.image}
-            description={item.description}
-            price={item.price}
-            type={item.type}
+          <SectionList
+            ref={sectionListRef}
+            sections={coffees}
+            keyExtractor={(item) => item.title}
+            stickySectionHeadersEnabled={false}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={[FONT.titleXs, styles.sectionTitle]}>{title}</Text>
+            )}
+            renderItem={({ item }) => (
+              <ListCard
+                id={item.id}
+                title={item.title}
+                image={item.image}
+                description={item.description}
+                price={item.price}
+                type={item.type}
+              />
+            )}
+            contentContainerStyle={styles.listContainer}
+            style={{ flex: 1 }}
           />
-        )}
-        contentContainerStyle={styles.listContainer}
-        style={{ flex: 1 }}
-      />
+        </Animated.View>
+      </View>
+
       {/* </ScrollView> */}
     </SafeAreaView>
   );
