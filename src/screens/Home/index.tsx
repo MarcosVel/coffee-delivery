@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { RefObject, useRef } from "react";
 import {
   Image,
   Keyboard,
+  ScrollView,
   SectionList,
   StatusBar,
   Text,
@@ -30,26 +31,30 @@ export default function Home() {
   const insets = useSafeAreaInsets();
   const statusBarHeight = insets.top;
 
-  const sectionListRef = useRef<SectionList>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const sectionRefs = useRef([]);
 
-  const scrollToSection = (sectionIndex: number) => {
-    sectionListRef.current?.scrollToLocation({
-      sectionIndex,
-      itemIndex: 0,
-      animated: true,
+  const scrollToSection = (index: number) => {
+    sectionRefs.current[index]?.measureLayout(scrollViewRef.current, (x, y) => {
+      scrollViewRef.current?.scrollTo({
+        x: 0,
+        y: y - statusBarHeight,
+        animated: true,
+      });
     });
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <ScrollView
-        bounces={false}
-        contentContainerStyle={styles.scrollContainer}
-        > */}
+    <ScrollView
+      ref={scrollViewRef}
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+    >
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle="light-content"
+        barStyle="dark-content"
       />
 
       <TouchableWithoutFeedback
@@ -58,7 +63,7 @@ export default function Home() {
       >
         <Animated.View
           entering={SlideInUp.duration(1000)}
-          style={[styles.header, { paddingTop: statusBarHeight }]}
+          style={[styles.header, { paddingTop: statusBarHeight + 20 }]}
         >
           <Header />
 
@@ -76,7 +81,7 @@ export default function Home() {
         </Animated.View>
       </TouchableWithoutFeedback>
 
-      <View style={styles.main}>
+      <View style={styles.carousel}>
         <Animated.View
           entering={SlideInRight.duration(600)
             .delay(1200)
@@ -84,7 +89,9 @@ export default function Home() {
         >
           <CarouselCard />
         </Animated.View>
+      </View>
 
+      <View style={{ flexGrow: 1 }}>
         <Animated.View
           style={{ flex: 1 }}
           entering={SlideInDown.duration(800)
@@ -126,31 +133,31 @@ export default function Home() {
             </View>
           </View>
 
-          <SectionList
-            ref={sectionListRef}
-            sections={coffees}
-            keyExtractor={(item) => item.title}
-            stickySectionHeadersEnabled={false}
-            renderSectionHeader={({ section: { title } }) => (
-              <Text style={[FONT.titleXs, styles.sectionTitle]}>{title}</Text>
-            )}
-            renderItem={({ item }) => (
-              <ListCard
-                id={item.id}
-                title={item.title}
-                image={item.image}
-                description={item.description}
-                price={item.price}
-                type={item.type}
-              />
-            )}
-            contentContainerStyle={styles.listContainer}
-            style={{ flex: 1 }}
-          />
+          {coffees.map((item, index) => (
+            <View
+              key={index}
+              ref={(ref) => (sectionRefs.current[index] = ref)}
+              style={styles.listContainer}
+            >
+              <Text style={[FONT.titleXs, styles.sectionTitle]}>
+                {item.title}
+              </Text>
+
+              {item.data.map((eachCoffee) => (
+                <ListCard
+                  key={eachCoffee.id}
+                  id={eachCoffee.id}
+                  title={eachCoffee.title}
+                  image={eachCoffee.image}
+                  description={eachCoffee.description}
+                  price={eachCoffee.price}
+                  type={eachCoffee.type}
+                />
+              ))}
+            </View>
+          ))}
         </Animated.View>
       </View>
-
-      {/* </ScrollView> */}
-    </SafeAreaView>
+    </ScrollView>
   );
 }
