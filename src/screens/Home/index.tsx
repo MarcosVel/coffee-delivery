@@ -1,9 +1,7 @@
-import React, { RefObject, useRef } from "react";
+import React, { useRef } from "react";
 import {
   Image,
   Keyboard,
-  ScrollView,
-  SectionList,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -12,15 +10,18 @@ import {
 } from "react-native";
 import Animated, {
   Easing,
+  Extrapolation,
   FadeInDown,
+  interpolate,
+  interpolateColor,
   SlideInDown,
   SlideInRight,
   SlideInUp,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
 } from "react-native-reanimated";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import coffee from "../../assets/images/coffee.png";
 import { CarouselCard, Header, Input, ListCard } from "../../components";
 import { coffees } from "../../data/coffees";
@@ -31,7 +32,9 @@ export default function Home() {
   const insets = useSafeAreaInsets();
   const statusBarHeight = insets.top;
 
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollY = useSharedValue(0);
+
+  const scrollViewRef = useRef<Animated.ScrollView>(null);
   const sectionRefs = useRef([]);
 
   const scrollToSection = (index: number) => {
@@ -44,120 +47,165 @@ export default function Home() {
     });
   };
 
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
+
+  const fixedHeaderStyle = useAnimatedStyle(() => {
+    return {
+      top: interpolate(scrollY.value, [1, 400], [0, -10], Extrapolation.CLAMP),
+      backgroundColor: interpolateColor(
+        scrollY.value,
+        [1, 400],
+        [COLORS.GRAY_100, COLORS.GRAY_900]
+      ),
+    };
+  });
+
+  const fixedTextStyle = useAnimatedStyle(() => {
+    return {
+      color: interpolateColor(
+        scrollY.value,
+        [1, 400],
+        [COLORS.WHITE, COLORS.GRAY_100]
+      ),
+    };
+  });
+
+  const animatedBackgroundStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(
+        scrollY.value,
+        [1, 600],
+        [COLORS.GRAY_100, COLORS.GRAY_900]
+      ),
+    };
+  });
+
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      bounces={false}
-    >
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      />
+    <View style={{ flex: 1 }}>
+      <Header animatedStyles={fixedHeaderStyle} textStyle={fixedTextStyle} />
 
-      <TouchableWithoutFeedback
-        style={{ flex: 1 }}
-        onPress={() => Keyboard.dismiss()}
+      <Animated.ScrollView
+        ref={scrollViewRef}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
       >
-        <Animated.View
-          entering={SlideInUp.duration(1000)}
-          style={[styles.header, { paddingTop: statusBarHeight + 20 }]}
-        >
-          <Header />
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="light-content"
+        />
 
-          <Animated.View entering={FadeInDown.delay(900)}>
-            <Text style={[FONT.titleMd, styles.title]}>
-              {"Encontre o café perfeito para\nqualquer hora do dia"}
-            </Text>
-
-            <View>
-              <Input />
-
-              <Image source={coffee} style={styles.coffee} />
-            </View>
-          </Animated.View>
-        </Animated.View>
-      </TouchableWithoutFeedback>
-
-      <View style={styles.carousel}>
-        <Animated.View
-          entering={SlideInRight.duration(600)
-            .delay(1200)
-            .easing(Easing.out(Easing.ease))}
-        >
-          <CarouselCard />
-        </Animated.View>
-      </View>
-
-      <View style={{ flexGrow: 1 }}>
-        <Animated.View
+        <TouchableWithoutFeedback
           style={{ flex: 1 }}
-          entering={SlideInDown.duration(800)
-            .delay(1000)
-            .easing(Easing.out(Easing.ease))}
+          onPress={() => Keyboard.dismiss()}
         >
-          <View style={styles.listFilter}>
-            <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
-              Nossos cafés
-            </Text>
-            <View style={styles.filters}>
-              <TouchableOpacity
-                style={styles.filterOption}
-                activeOpacity={0.5}
-                onPress={() => scrollToSection(0)}
-              >
-                <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                  TRADICIONAIS
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.filterOption}
-                activeOpacity={0.5}
-                onPress={() => scrollToSection(1)}
-              >
-                <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                  DOCES
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.filterOption}
-                activeOpacity={0.5}
-                onPress={() => scrollToSection(2)}
-              >
-                <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                  ESPECIAIS
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {coffees.map((item, index) => (
-            <View
-              key={index}
-              ref={(ref) => (sectionRefs.current[index] = ref)}
-              style={styles.listContainer}
-            >
-              <Text style={[FONT.titleXs, styles.sectionTitle]}>
-                {item.title}
+          <Animated.View
+            entering={SlideInUp.duration(1000)}
+            style={[
+              styles.header,
+              { paddingTop: statusBarHeight + 76 },
+              animatedBackgroundStyle,
+            ]}
+          >
+            <Animated.View entering={FadeInDown.delay(900)}>
+              <Text style={[FONT.titleMd, styles.title]}>
+                {"Encontre o café perfeito para\nqualquer hora do dia"}
               </Text>
 
-              {item.data.map((eachCoffee) => (
-                <ListCard
-                  key={eachCoffee.id}
-                  id={eachCoffee.id}
-                  title={eachCoffee.title}
-                  image={eachCoffee.image}
-                  description={eachCoffee.description}
-                  price={eachCoffee.price}
-                  type={eachCoffee.type}
-                />
-              ))}
+              <View>
+                <Input />
+
+                <Image source={coffee} style={styles.coffee} />
+              </View>
+            </Animated.View>
+          </Animated.View>
+        </TouchableWithoutFeedback>
+
+        <View style={styles.carousel}>
+          <Animated.View
+            entering={SlideInRight.duration(600)
+              .delay(1200)
+              .easing(Easing.out(Easing.ease))}
+          >
+            <CarouselCard />
+          </Animated.View>
+        </View>
+
+        <View style={{ flexGrow: 1 }}>
+          <Animated.View
+            style={{ flex: 1 }}
+            entering={SlideInDown.duration(800)
+              .delay(1000)
+              .easing(Easing.out(Easing.ease))}
+          >
+            <View style={styles.listFilter}>
+              <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
+                Nossos cafés
+              </Text>
+              <View style={styles.filters}>
+                <TouchableOpacity
+                  style={styles.filterOption}
+                  activeOpacity={0.5}
+                  onPress={() => scrollToSection(0)}
+                >
+                  <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                    TRADICIONAIS
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.filterOption}
+                  activeOpacity={0.5}
+                  onPress={() => scrollToSection(1)}
+                >
+                  <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                    DOCES
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.filterOption}
+                  activeOpacity={0.5}
+                  onPress={() => scrollToSection(2)}
+                >
+                  <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                    ESPECIAIS
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          ))}
-        </Animated.View>
-      </View>
-    </ScrollView>
+
+            {coffees.map((item, index) => (
+              <View
+                key={index}
+                ref={(ref) => (sectionRefs.current[index] = ref)}
+                style={styles.listContainer}
+              >
+                <Text style={[FONT.titleXs, styles.sectionTitle]}>
+                  {item.title}
+                </Text>
+
+                {item.data.map((eachCoffee) => (
+                  <ListCard
+                    key={eachCoffee.id}
+                    id={eachCoffee.id}
+                    title={eachCoffee.title}
+                    image={eachCoffee.image}
+                    description={eachCoffee.description}
+                    price={eachCoffee.price}
+                    type={eachCoffee.type}
+                  />
+                ))}
+              </View>
+            ))}
+          </Animated.View>
+        </View>
+      </Animated.ScrollView>
+    </View>
   );
 }
