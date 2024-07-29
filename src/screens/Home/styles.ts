@@ -8,8 +8,6 @@ export const styles = StyleSheet.create({
   },
   header: {
     width: "100%",
-    // position: "absolute",
-    // backgroundColor: COLORS.GRAY_100,
     paddingHorizontal: 32,
     paddingBottom: 140,
   },
@@ -25,8 +23,7 @@ export const styles = StyleSheet.create({
     zIndex: 2,
   },
   carousel: {
-    // marginTop: 324,
-    marginTop: -72,
+    marginTop: -96,
   },
   listFilter: {
     height: 90,

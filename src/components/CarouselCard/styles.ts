@@ -2,14 +2,13 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "../../styles/theme";
 
 export const CARD_WIDTH = 142;
-export const LIST_GAP = 32;
 
 export const styles = StyleSheet.create({
   listContainer: {
-    paddingHorizontal: 32,
-    paddingTop: 20,
+    paddingHorizontal: 40,
+    paddingTop: 28,
     paddingBottom: 32,
-    gap: LIST_GAP,
+    gap: 20,
   },
   container: {
     alignItems: "center",
