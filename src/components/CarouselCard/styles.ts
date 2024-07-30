@@ -1,15 +1,14 @@
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../styles/theme";
 
-export const CARD_WIDTH = 142;
-export const LIST_GAP = 32;
+export const CARD_WIDTH = 160;
 
 export const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 32,
-    paddingTop: 20,
+    paddingTop: 28,
     paddingBottom: 32,
-    gap: LIST_GAP,
+    gap: 12,
   },
   container: {
     alignItems: "center",
@@ -43,8 +42,8 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
   },
   tagText: {
-    fontSize: 8,
-    lineHeight: 8 * 1.3,
+    fontSize: 10,
+    lineHeight: 10 * 1.3,
     fontFamily: "Roboto_700Bold",
     color: COLORS.PURPLE_DARK,
     textAlign: "center",
@@ -60,14 +59,14 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   description: {
-    fontSize: 10,
-    lineHeight: 10 * 1.3,
+    fontSize: 12,
+    lineHeight: 12 * 1.3,
     fontFamily: "Roboto_400Regular",
     color: COLORS.GRAY_400,
     textAlign: "center",
   },
   currency: {
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Roboto_400Regular",
     color: COLORS.YELLOW_DARK,
   },

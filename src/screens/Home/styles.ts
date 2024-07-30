@@ -2,18 +2,12 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "../../styles/theme";
 
 export const styles = StyleSheet.create({
-  // scrollContainer: {
-  //   flexGrow: 1,
-  //   backgroundColor: COLORS.GRAY_900,
-  // },
   container: {
     flexGrow: 1,
     backgroundColor: COLORS.GRAY_900,
   },
   header: {
     width: "100%",
-    position: "absolute",
-    backgroundColor: COLORS.GRAY_100,
     paddingHorizontal: 32,
     paddingBottom: 140,
   },
@@ -28,8 +22,8 @@ export const styles = StyleSheet.create({
     right: -24,
     zIndex: 2,
   },
-  main: {
-    marginTop: 280,
+  carousel: {
+    marginTop: -96,
   },
   listFilter: {
     height: 90,
@@ -69,5 +63,6 @@ export const styles = StyleSheet.create({
     paddingTop: 8,
     paddingHorizontal: 32,
     gap: 32,
+    marginBottom: 48,
   },
 });
