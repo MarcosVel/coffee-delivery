@@ -43,7 +43,7 @@ export default function Home() {
     sectionRefs.current[index]?.measureLayout(scrollViewRef.current, (x, y) => {
       scrollViewRef.current?.scrollTo({
         x: 0,
-        y: y - statusBarHeight,
+        y: y - 208,
         animated: true,
       });
     });
@@ -86,6 +86,21 @@ export default function Home() {
     };
   });
 
+  const fixedFilterStyle = useAnimatedStyle(() => {
+    return {
+      position: "absolute",
+      width: "100%",
+      top: 118,
+      opacity: scrollY.value <= 460 ? 0 : 1,
+    };
+  });
+
+  const filterOpacityStyles = useAnimatedStyle(() => {
+    return {
+      opacity: scrollY.value <= 460 ? 1 : 0,
+    };
+  });
+
   const setLightStatusBar = () => StatusBar.setBarStyle("light-content", true);
   const setDarkStatusBar = () => StatusBar.setBarStyle("dark-content", true);
 
@@ -100,9 +115,48 @@ export default function Home() {
     }
   );
 
+  const CoffeeFilter = ({ fixed }: { fixed?: boolean }) => (
+    <Animated.View
+      style={[
+        styles.listFilter,
+        fixed ? fixedFilterStyle : filterOpacityStyles,
+      ]}
+    >
+      <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>Nossos cafés</Text>
+      <View style={styles.filters}>
+        <TouchableOpacity
+          style={styles.filterOption}
+          activeOpacity={0.5}
+          onPress={() => scrollToSection(0)}
+        >
+          <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+            TRADICIONAIS
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.filterOption}
+          activeOpacity={0.5}
+          onPress={() => scrollToSection(1)}
+        >
+          <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>DOCES</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.filterOption}
+          activeOpacity={0.5}
+          onPress={() => scrollToSection(2)}
+        >
+          <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+            ESPECIAIS
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </Animated.View>
+  );
+
   return (
     <View style={{ flex: 1 }}>
       <Header animatedStyles={fixedHeaderStyle} textStyle={fixedTextStyle} />
+      <CoffeeFilter fixed />
 
       <Animated.ScrollView
         ref={scrollViewRef}
@@ -155,40 +209,7 @@ export default function Home() {
                   .delay(1000)
                   .easing(Easing.out(Easing.ease))}
               >
-                <View style={styles.listFilter}>
-                  <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
-                    Nossos cafés
-                  </Text>
-                  <View style={styles.filters}>
-                    <TouchableOpacity
-                      style={styles.filterOption}
-                      activeOpacity={0.5}
-                      onPress={() => scrollToSection(0)}
-                    >
-                      <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                        TRADICIONAIS
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.filterOption}
-                      activeOpacity={0.5}
-                      onPress={() => scrollToSection(1)}
-                    >
-                      <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                        DOCES
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.filterOption}
-                      activeOpacity={0.5}
-                      onPress={() => scrollToSection(2)}
-                    >
-                      <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                        ESPECIAIS
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                <CoffeeFilter />
 
                 {coffees.map((item, index) => (
                   <View
