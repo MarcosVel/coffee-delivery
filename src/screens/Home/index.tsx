@@ -14,9 +14,11 @@ import Animated, {
   FadeInDown,
   interpolate,
   interpolateColor,
+  runOnJS,
   SlideInDown,
   SlideInRight,
   SlideInUp,
+  useAnimatedReaction,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -84,6 +86,20 @@ export default function Home() {
     };
   });
 
+  const setLightStatusBar = () => StatusBar.setBarStyle("light-content", true);
+  const setDarkStatusBar = () => StatusBar.setBarStyle("dark-content", true);
+
+  useAnimatedReaction(
+    () => scrollY.value,
+    () => {
+      if (scrollY.value < 200) {
+        return runOnJS(setLightStatusBar)();
+      }
+
+      return runOnJS(setDarkStatusBar)();
+    }
+  );
+
   return (
     <View style={{ flex: 1 }}>
       <Header animatedStyles={fixedHeaderStyle} textStyle={fixedTextStyle} />
@@ -96,115 +112,111 @@ export default function Home() {
         onScroll={scrollHandler}
         scrollEventThrottle={16}
       >
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle="light-content"
-        />
-
         <TouchableWithoutFeedback
           style={{ flex: 1 }}
           onPress={() => Keyboard.dismiss()}
         >
-          <Animated.View
-            entering={SlideInUp.duration(1000)}
-            style={[
-              styles.header,
-              { paddingTop: statusBarHeight + 76 },
-              animatedBackgroundStyle,
-            ]}
-          >
-            <Animated.View entering={FadeInDown.delay(900)}>
-              <Text style={[FONT.titleMd, styles.title]}>
-                {"Encontre o café perfeito para\nqualquer hora do dia"}
-              </Text>
-
-              <View>
-                <Input />
-
-                <Image source={coffee} style={styles.coffee} />
-              </View>
-            </Animated.View>
-          </Animated.View>
-        </TouchableWithoutFeedback>
-
-        <View style={styles.carousel}>
-          <Animated.View
-            entering={SlideInRight.duration(600)
-              .delay(1200)
-              .easing(Easing.out(Easing.ease))}
-          >
-            <CarouselCard />
-          </Animated.View>
-        </View>
-
-        <View style={{ flexGrow: 1 }}>
-          <Animated.View
-            style={{ flex: 1 }}
-            entering={SlideInDown.duration(800)
-              .delay(1000)
-              .easing(Easing.out(Easing.ease))}
-          >
-            <View style={styles.listFilter}>
-              <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
-                Nossos cafés
-              </Text>
-              <View style={styles.filters}>
-                <TouchableOpacity
-                  style={styles.filterOption}
-                  activeOpacity={0.5}
-                  onPress={() => scrollToSection(0)}
-                >
-                  <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                    TRADICIONAIS
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.filterOption}
-                  activeOpacity={0.5}
-                  onPress={() => scrollToSection(1)}
-                >
-                  <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                    DOCES
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.filterOption}
-                  activeOpacity={0.5}
-                  onPress={() => scrollToSection(2)}
-                >
-                  <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
-                    ESPECIAIS
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {coffees.map((item, index) => (
-              <View
-                key={index}
-                ref={(ref) => (sectionRefs.current[index] = ref)}
-                style={styles.listContainer}
-              >
-                <Text style={[FONT.titleXs, styles.sectionTitle]}>
-                  {item.title}
+          <View>
+            <Animated.View
+              entering={SlideInUp.duration(1000)}
+              style={[
+                styles.header,
+                { paddingTop: statusBarHeight + 76 },
+                animatedBackgroundStyle,
+              ]}
+            >
+              <Animated.View entering={FadeInDown.delay(900)}>
+                <Text style={[FONT.titleMd, styles.title]}>
+                  {"Encontre o café perfeito para\nqualquer hora do dia"}
                 </Text>
 
-                {item.data.map((eachCoffee) => (
-                  <ListCard
-                    key={eachCoffee.id}
-                    id={eachCoffee.id}
-                    title={eachCoffee.title}
-                    image={eachCoffee.image}
-                    description={eachCoffee.description}
-                    price={eachCoffee.price}
-                    type={eachCoffee.type}
-                  />
+                <View>
+                  <Input />
+
+                  <Image source={coffee} style={styles.coffee} />
+                </View>
+              </Animated.View>
+            </Animated.View>
+
+            <View style={styles.carousel}>
+              <Animated.View
+                entering={SlideInRight.duration(600)
+                  .delay(1200)
+                  .easing(Easing.out(Easing.ease))}
+              >
+                <CarouselCard />
+              </Animated.View>
+            </View>
+
+            <View style={{ flexGrow: 1 }}>
+              <Animated.View
+                style={{ flex: 1 }}
+                entering={SlideInDown.duration(800)
+                  .delay(1000)
+                  .easing(Easing.out(Easing.ease))}
+              >
+                <View style={styles.listFilter}>
+                  <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
+                    Nossos cafés
+                  </Text>
+                  <View style={styles.filters}>
+                    <TouchableOpacity
+                      style={styles.filterOption}
+                      activeOpacity={0.5}
+                      onPress={() => scrollToSection(0)}
+                    >
+                      <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                        TRADICIONAIS
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.filterOption}
+                      activeOpacity={0.5}
+                      onPress={() => scrollToSection(1)}
+                    >
+                      <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                        DOCES
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.filterOption}
+                      activeOpacity={0.5}
+                      onPress={() => scrollToSection(2)}
+                    >
+                      <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+                        ESPECIAIS
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                {coffees.map((item, index) => (
+                  <View
+                    key={index}
+                    ref={(ref) => (sectionRefs.current[index] = ref)}
+                    style={styles.listContainer}
+                  >
+                    <Text style={[FONT.titleXs, styles.sectionTitle]}>
+                      {item.title}
+                    </Text>
+
+                    {item.data.map((eachCoffee) => (
+                      <ListCard
+                        key={eachCoffee.id}
+                        id={eachCoffee.id}
+                        title={eachCoffee.title}
+                        image={eachCoffee.image}
+                        description={eachCoffee.description}
+                        price={eachCoffee.price}
+                        type={eachCoffee.type}
+                      />
+                    ))}
+                  </View>
                 ))}
-              </View>
-            ))}
-          </Animated.View>
-        </View>
+              </Animated.View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
       </Animated.ScrollView>
     </View>
   );
