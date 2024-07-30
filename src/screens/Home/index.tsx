@@ -30,6 +30,8 @@ import { coffees } from "../../data/coffees";
 import { COLORS, FONT } from "../../styles/theme";
 import { styles } from "./styles";
 
+const AnimatedFilter = Animated.createAnimatedComponent(TouchableOpacity);
+
 export default function Home() {
   const insets = useSafeAreaInsets();
   const statusBarHeight = insets.top;
@@ -102,6 +104,34 @@ export default function Home() {
     };
   });
 
+  const filterAnimatedStyles = (inputRange: [number, number, number]) => {
+    const animatedFilterStyles = useAnimatedStyle(() => {
+      return {
+        backgroundColor: interpolateColor(scrollY.value, inputRange, [
+          "transparent",
+          COLORS.PURPLE,
+          "transparent",
+        ]),
+      };
+    });
+
+    return animatedFilterStyles;
+  };
+
+  const filterTextAnimatedStyles = (inputRange: [number, number, number]) => {
+    const animatedTextFilterStyle = useAnimatedStyle(() => {
+      return {
+        color: interpolateColor(scrollY.value, inputRange, [
+          COLORS.PURPLE_DARK,
+          COLORS.WHITE,
+          COLORS.PURPLE_DARK,
+        ]),
+      };
+    });
+
+    return animatedTextFilterStyle;
+  };
+
   const setLightStatusBar = () => StatusBar.setBarStyle("light-content", true);
   const setDarkStatusBar = () => StatusBar.setBarStyle("dark-content", true);
 
@@ -125,31 +155,42 @@ export default function Home() {
     >
       <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>Nossos cafés</Text>
       <View style={styles.filters}>
-        <TouchableOpacity
-          style={styles.filterOption}
+        <AnimatedFilter
+          style={[styles.filterOption, filterAnimatedStyles([1, 460, 1312])]}
           activeOpacity={0.5}
           onPress={() => scrollToSection(0)}
         >
-          <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+          <Animated.Text
+            style={[FONT.tag, filterTextAnimatedStyles([1, 460, 1312])]}
+          >
             TRADICIONAIS
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.filterOption}
+          </Animated.Text>
+        </AnimatedFilter>
+        <AnimatedFilter
+          style={[styles.filterOption, filterAnimatedStyles([460, 1312, 1857])]}
           activeOpacity={0.5}
           onPress={() => scrollToSection(1)}
         >
-          <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>DOCES</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.filterOption}
+          <Animated.Text
+            style={[FONT.tag, filterTextAnimatedStyles([460, 1312, 1857])]}
+          >
+            DOCES
+          </Animated.Text>
+        </AnimatedFilter>
+        <AnimatedFilter
+          style={[
+            styles.filterOption,
+            filterAnimatedStyles([1312, 1857, 3000]),
+          ]}
           activeOpacity={0.5}
           onPress={() => scrollToSection(2)}
         >
-          <Text style={[FONT.tag, { color: COLORS.PURPLE_DARK }]}>
+          <Animated.Text
+            style={[FONT.tag, filterTextAnimatedStyles([1312, 1857, 3000])]}
+          >
             ESPECIAIS
-          </Text>
-        </TouchableOpacity>
+          </Animated.Text>
+        </AnimatedFilter>
       </View>
     </Animated.View>
   );
