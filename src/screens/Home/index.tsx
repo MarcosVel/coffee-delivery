@@ -88,10 +88,11 @@ export default function Home() {
 
   const fixedFilterStyle = useAnimatedStyle(() => {
     return {
+      display: scrollY.value <= 460 ? "none" : "flex",
       position: "absolute",
       width: "100%",
       top: 118,
-      opacity: scrollY.value <= 460 ? 0 : 1,
+      zIndex: 99,
     };
   });
 
