@@ -36,7 +36,7 @@ type CarouselItemProps = {
 const CarouselItem = ({ item, index, scrollX }: CarouselItemProps) => {
   const navigation = useNavigation<AppNavigationProps>();
 
-  const inputRange = [(index - 1) * 114, index * 114, (index + 1) * 114];
+  const inputRange = [(index - 1) * 120, index * 120, (index + 1) * 120];
 
   const scale = useAnimatedStyle(() => {
     return {
@@ -45,7 +45,7 @@ const CarouselItem = ({ item, index, scrollX }: CarouselItemProps) => {
           scale: interpolate(
             scrollX.value,
             inputRange,
-            [0.8, 1.1, 0.8],
+            [0.8, 1, 0.8],
             Extrapolation.CLAMP
           ),
         },
@@ -74,13 +74,13 @@ const CarouselItem = ({ item, index, scrollX }: CarouselItemProps) => {
       </View>
 
       <View style={styles.info}>
-        <Text style={[FONT.titleXs, styles.title]}>{item.title}</Text>
+        <Text style={[FONT.titleSm, styles.title]}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
       </View>
 
       <View style={styles.priceView}>
         <Text style={styles.currency}>R$ </Text>
-        <Text style={[FONT.titleSm, styles.price]}>
+        <Text style={[FONT.titleMd, styles.price]}>
           {item.price.toFixed(2).replace(".", ",")}
         </Text>
       </View>
@@ -90,7 +90,7 @@ const CarouselItem = ({ item, index, scrollX }: CarouselItemProps) => {
 
 export default function CarouselCard() {
   const flatListRef = useRef<FlatList>(null);
-  const itemWidth = CARD_WIDTH + 16;
+  const itemWidth = CARD_WIDTH;
   const snapOffset = (width - itemWidth) / 2;
 
   const handleScrollEnd = (event: any) => {
