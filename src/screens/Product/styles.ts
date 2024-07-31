@@ -47,8 +47,6 @@ export const styles = StyleSheet.create({
     paddingRight: 12,
   },
   smokeView: {
-    alignItems: "center",
-    justifyContent: "center",
     zIndex: 2,
   },
   smoke: {

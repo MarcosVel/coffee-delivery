@@ -4,7 +4,7 @@ import { Alert, Image, SafeAreaView, Text, View } from "react-native";
 import { CartProps, ProductProps } from "../../@types/typesDTO";
 import cup from "../../assets/images/cup.png";
 import smoke from "../../assets/images/smoke3.png";
-import { Amount, Button, Select } from "../../components";
+import { Amount, Button, Select, Smoke } from "../../components";
 import { AppNavigationProps } from "../../routes/app.routes";
 import { FONT } from "../../styles/theme";
 import { styles } from "./styles";
@@ -57,7 +57,8 @@ export default function Product() {
         <Text style={[FONT.textMd, styles.description]}>{description}</Text>
 
         <View style={styles.smokeView}>
-          <Image source={smoke} style={styles.smoke} resizeMode="contain" />
+          {/* <Image source={smoke} style={styles.smoke} resizeMode="contain" /> */}
+          <Smoke />
         </View>
         <Image source={cup} style={styles.cup} />
       </View>
