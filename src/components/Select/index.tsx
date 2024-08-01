@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { COLORS, FONT } from "../../styles/theme";
 import { styles } from "./styles";
+import Animated, { StyleProps } from "react-native-reanimated";
 
 type SelectProps = {
   onSelect: (selectValue: number) => void;
+  animatedStyle: StyleProps;
 };
 
-export default function Select({ onSelect }: SelectProps) {
+const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
+
+export default function Select({ onSelect, animatedStyle }: SelectProps) {
   const [selected, setSelected] = useState(0);
 
   function handleSelection(selectValue: number) {
@@ -17,8 +21,11 @@ export default function Select({ onSelect }: SelectProps) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={selected === 114 ? styles.selected : styles.select}
+      <AnimatedButton
+        style={[
+          animatedStyle,
+          selected === 114 ? styles.selected : styles.select,
+        ]}
         activeOpacity={0.4}
         onPress={() => handleSelection(114)}
       >
@@ -31,10 +38,13 @@ export default function Select({ onSelect }: SelectProps) {
         >
           114ml
         </Text>
-      </TouchableOpacity>
+      </AnimatedButton>
 
-      <TouchableOpacity
-        style={selected === 140 ? styles.selected : styles.select}
+      <AnimatedButton
+        style={[
+          animatedStyle,
+          selected === 140 ? styles.selected : styles.select,
+        ]}
         activeOpacity={0.4}
         onPress={() => handleSelection(140)}
       >
@@ -47,10 +57,13 @@ export default function Select({ onSelect }: SelectProps) {
         >
           140ml
         </Text>
-      </TouchableOpacity>
+      </AnimatedButton>
 
-      <TouchableOpacity
-        style={selected === 227 ? styles.selected : styles.select}
+      <AnimatedButton
+        style={[
+          animatedStyle,
+          selected === 227 ? styles.selected : styles.select,
+        ]}
         activeOpacity={0.4}
         onPress={() => handleSelection(227)}
       >
@@ -63,7 +76,7 @@ export default function Select({ onSelect }: SelectProps) {
         >
           227ml
         </Text>
-      </TouchableOpacity>
+      </AnimatedButton>
     </View>
   );
 }

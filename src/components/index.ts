@@ -9,3 +9,4 @@ export { default as ListCard } from "./ListCard";
 export { default as Loading } from "./Loading";
 export { default as Scooter } from "./Scooter";
 export { default as Select } from "./Select";
+export { default as Smoke } from "./Smoke";
