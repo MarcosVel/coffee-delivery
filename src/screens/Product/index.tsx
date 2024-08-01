@@ -17,6 +17,7 @@ import { AppNavigationProps } from "../../routes/app.routes";
 import { cartAdd } from "../../storage/cartStorage";
 import { COLORS, FONT } from "../../styles/theme";
 import { styles } from "./styles";
+import { playAudio } from "../../utils";
 
 export default function Product() {
   const navigation = useNavigation<AppNavigationProps>();
@@ -59,10 +60,13 @@ export default function Product() {
 
   async function handleAddToCart(item: CartProps) {
     if (!sizeSelected) {
-      return (displayError.value = withSequence(
+      displayError.value = withSequence(
         withTiming(1, { easing: Easing.inOut(Easing.quad) }),
-        withDelay(1000, withTiming(0, { easing: Easing.inOut(Easing.quad) }))
-      ));
+        withDelay(700, withTiming(0, { easing: Easing.inOut(Easing.quad) }))
+      );
+
+      await playAudio(false);
+      return;
     }
 
     await cartAdd(item)

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions, Text, View } from "react-native";
 import Animated, {
   Easing,
@@ -10,6 +10,7 @@ import Animated, {
 import { Button, Scooter } from "../../components";
 import { AppNavigationProps } from "../../routes/app.routes";
 import { FONT } from "../../styles/theme";
+import { playAudio } from "../../utils";
 import { styles } from "./styles";
 
 const { width } = Dimensions.get("window");
@@ -30,6 +31,16 @@ export default function Confirmation() {
       easing: Easing.elastic(1.2),
     },
   });
+
+  useEffect(() => {
+    async function playSuccessAudio() {
+      await playAudio(true);
+    }
+
+    setTimeout(() => {
+      playSuccessAudio();
+    }, 500);
+  }, []);
 
   return (
     <View style={styles.container}>
