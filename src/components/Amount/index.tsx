@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics";
 import { Minus, Plus } from "phosphor-react-native";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
@@ -20,17 +21,19 @@ export default function Amount({
 }: AmountProps) {
   const [value, setValue] = useState(0 || defaultValue);
 
-  function handleAmount(type?: string) {
+  async function handleAmount(type?: string) {
     if (type === "minus" && hasMinimum && value === 1) {
       return;
     }
 
     if (type === "minus") {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       setValue((prev) => prev - 1);
       onChange(value - 1);
       return;
     }
 
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     setValue((prev) => prev + 1);
     onChange(value + 1);
   }

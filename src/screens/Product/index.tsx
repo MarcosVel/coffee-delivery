@@ -1,4 +1,5 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
+import * as Haptics from "expo-haptics";
 import React, { useState } from "react";
 import { Alert, Image, SafeAreaView, Text, View } from "react-native";
 import Animated, {
@@ -16,8 +17,8 @@ import { Amount, Button, Select, Smoke } from "../../components";
 import { AppNavigationProps } from "../../routes/app.routes";
 import { cartAdd } from "../../storage/cartStorage";
 import { COLORS, FONT } from "../../styles/theme";
-import { styles } from "./styles";
 import { playAudio } from "../../utils";
+import { styles } from "./styles";
 
 export default function Product() {
   const navigation = useNavigation<AppNavigationProps>();
@@ -66,6 +67,7 @@ export default function Product() {
       );
 
       await playAudio(false);
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       return;
     }
 
