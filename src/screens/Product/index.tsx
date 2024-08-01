@@ -24,16 +24,27 @@ export default function Product() {
   const { id, image, title, description, price, type } = params as ProductProps;
 
   const [sizeSelected, setSizeSelected] = useState(0);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
 
-  const textError = useSharedValue(0);
+  const displayError = useSharedValue(0);
 
   const textErrorAnimation = useAnimatedStyle(() => {
     return {
       color: interpolateColor(
-        textError.value,
+        displayError.value,
         [0, 1],
         [COLORS.GRAY_400, COLORS.RED_DARK]
+      ),
+    };
+  });
+
+  const sizeBorderAnimation = useAnimatedStyle(() => {
+    return {
+      borderWidth: 1,
+      borderColor: interpolateColor(
+        displayError.value,
+        [0, 1],
+        [COLORS.GRAY_700, COLORS.RED_DARK]
       ),
     };
   });
@@ -48,7 +59,7 @@ export default function Product() {
 
   async function handleAddToCart(item: CartProps) {
     if (!sizeSelected) {
-      return (textError.value = withSequence(
+      return (displayError.value = withSequence(
         withTiming(1, { easing: Easing.inOut(Easing.quad) }),
         withDelay(1000, withTiming(0, { easing: Easing.inOut(Easing.quad) }))
       ));
@@ -96,10 +107,10 @@ export default function Product() {
           Selecione o tamanho:
         </Animated.Text>
 
-        <Select onSelect={selectSize} />
+        <Select onSelect={selectSize} animatedStyle={sizeBorderAnimation} />
 
         <View style={styles.addCoffee}>
-          <Amount onChange={selectAmount} />
+          <Amount hasMinimum defaultValue={amount} onChange={selectAmount} />
 
           <Button
             title="ADICIONAR"
