@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   footerText: {
-    color: COLORS.GRAY_400,
+    // color: COLORS.GRAY_400,
     marginBottom: 8,
   },
   addCoffee: {

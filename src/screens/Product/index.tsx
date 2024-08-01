@@ -1,14 +1,22 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Alert, Image, SafeAreaView, Text, View } from "react-native";
+import Animated, {
+  Easing,
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 import { CartProps, ProductProps } from "../../@types/typesDTO";
 import cup from "../../assets/images/cup.png";
-import smoke from "../../assets/images/smoke3.png";
 import { Amount, Button, Select, Smoke } from "../../components";
 import { AppNavigationProps } from "../../routes/app.routes";
-import { FONT } from "../../styles/theme";
-import { styles } from "./styles";
 import { cartAdd } from "../../storage/cartStorage";
+import { COLORS, FONT } from "../../styles/theme";
+import { styles } from "./styles";
 
 export default function Product() {
   const navigation = useNavigation<AppNavigationProps>();
@@ -17,6 +25,18 @@ export default function Product() {
 
   const [sizeSelected, setSizeSelected] = useState(0);
   const [amount, setAmount] = useState(0);
+
+  const textError = useSharedValue(0);
+
+  const textErrorAnimation = useAnimatedStyle(() => {
+    return {
+      color: interpolateColor(
+        textError.value,
+        [0, 1],
+        [COLORS.GRAY_400, COLORS.RED_DARK]
+      ),
+    };
+  });
 
   function selectSize(selectValue: number) {
     setSizeSelected(selectValue);
@@ -27,6 +47,13 @@ export default function Product() {
   }
 
   async function handleAddToCart(item: CartProps) {
+    if (!sizeSelected) {
+      return (textError.value = withSequence(
+        withTiming(1, { easing: Easing.inOut(Easing.quad) }),
+        withDelay(1000, withTiming(0, { easing: Easing.inOut(Easing.quad) }))
+      ));
+    }
+
     await cartAdd(item)
       .then(() => {
         navigation.navigate("cart");
@@ -57,16 +84,17 @@ export default function Product() {
         <Text style={[FONT.textMd, styles.description]}>{description}</Text>
 
         <View style={styles.smokeView}>
-          {/* <Image source={smoke} style={styles.smoke} resizeMode="contain" /> */}
           <Smoke />
         </View>
         <Image source={cup} style={styles.cup} />
       </View>
 
       <View style={styles.footer}>
-        <Text style={[FONT.textSm, styles.footerText]}>
+        <Animated.Text
+          style={[FONT.textSm, styles.footerText, textErrorAnimation]}
+        >
           Selecione o tamanho:
-        </Text>
+        </Animated.Text>
 
         <Select onSelect={selectSize} />
 
@@ -75,7 +103,7 @@ export default function Product() {
 
           <Button
             title="ADICIONAR"
-            disabled={!sizeSelected || amount === 0}
+            opacity={!sizeSelected}
             onPress={() =>
               handleAddToCart({
                 id,

@@ -29,11 +29,11 @@ export default function Smoke() {
 
   const startAnimation = useCallback(() => {
     path1Opacity.value = createAnimation(0);
-    path2Opacity.value = createAnimation(1000);
-    path3Opacity.value = createAnimation(2000);
-    path4Opacity.value = createAnimation(3000);
-    path5Opacity.value = createAnimation(4000);
-    path6Opacity.value = createAnimation(5000);
+    path2Opacity.value = createAnimation(1100);
+    path3Opacity.value = createAnimation(2200);
+    path4Opacity.value = createAnimation(3300);
+    path5Opacity.value = createAnimation(4400);
+    path6Opacity.value = createAnimation(5500);
   }, [
     path1Opacity,
     path2Opacity,
@@ -48,7 +48,7 @@ export default function Smoke() {
 
     const intervalId = setInterval(() => {
       startAnimation(); // Call startAnimation every 5 seconds
-    }, 7000);
+    }, 8000);
 
     return () => clearInterval(intervalId); // Cleanup interval on unmount
   }, [startAnimation]);
