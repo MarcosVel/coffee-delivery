@@ -21,7 +21,7 @@ export default function Button({
         styles.container,
         {
           backgroundColor:
-            variant === "yellow" ? COLORS.YELLOW_DARK : COLORS.PURPLE_DARK,
+            variant === "yellow" ? COLORS.YELLOW_DARK : COLORS.PURPLE,
           opacity: opacity ? 0.3 : 1,
         },
       ]}

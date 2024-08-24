@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import {
-  Image,
   Keyboard,
   StatusBar,
   Text,
@@ -24,7 +23,6 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import coffee from "../../assets/images/coffee.png";
 import { CarouselCard, Header, Input, ListCard } from "../../components";
 import { coffees } from "../../data/coffees";
 import { COLORS, FONT } from "../../styles/theme";
@@ -228,8 +226,6 @@ export default function Home() {
 
                 <View>
                   <Input />
-
-                  <Image source={coffee} style={styles.coffee} />
                 </View>
               </Animated.View>
             </Animated.View>

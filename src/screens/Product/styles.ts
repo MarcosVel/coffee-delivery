@@ -25,14 +25,8 @@ export const styles = StyleSheet.create({
     color: COLORS.WHITE,
     textTransform: "uppercase",
   },
-  info: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 8,
-    marginBottom: 16,
-  },
   title: {
+    marginVertical: 16,
     color: COLORS.WHITE,
   },
   priceView: {
@@ -46,16 +40,22 @@ export const styles = StyleSheet.create({
     color: COLORS.WHITE,
     paddingRight: 12,
   },
-  smokeView: {
-    zIndex: 2,
-  },
-  smoke: {
-    maxHeight: 200,
-  },
   cup: {
     marginTop: "auto",
     bottom: -60,
     zIndex: 1,
+  },
+  value: {
+    fontSize: 18,
+    lineHeight: 18 * 1.3,
+    fontFamily: "Roboto_400Regular",
+    color: COLORS.GRAY_200,
+  },
+  flex: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    marginTop: 24,
   },
   footer: {
     paddingTop: 42,
