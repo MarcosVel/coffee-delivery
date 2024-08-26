@@ -33,4 +33,10 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.RED_LIGHT,
     paddingHorizontal: 40,
   },
+  location: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+    gap: 2,
+  },
 });

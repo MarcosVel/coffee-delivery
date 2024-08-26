@@ -74,8 +74,12 @@ const CarouselItem = ({ item, index, scrollX }: CarouselItemProps) => {
       </View>
 
       <View style={styles.info}>
-        <Text style={[FONT.titleSm, styles.title]}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+        <Text style={[FONT.titleSm, styles.title]} numberOfLines={2}>
+          {item.title}
+        </Text>
+        <Text style={styles.description} numberOfLines={2}>
+          {item.description}
+        </Text>
       </View>
 
       <View style={styles.priceView}>

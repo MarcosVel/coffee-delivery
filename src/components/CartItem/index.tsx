@@ -7,13 +7,7 @@ import Amount from "../Amount";
 import IconButton from "../IconButton";
 import { styles } from "./styles";
 
-export default function CartItem({
-  image,
-  title,
-  price,
-  sizeSelected,
-  amount,
-}: CartProps) {
+export default function CartItem({ image, title, price, amount }: CartProps) {
   const [amountSelected, setAmountSelected] = useState(amount);
 
   function selectAmount(newAmount: number) {
@@ -30,23 +24,24 @@ export default function CartItem({
       <Image source={image} style={styles.image} />
 
       <View style={{ flex: 1 }}>
+        <Text style={[FONT.textMd, styles.title]} numberOfLines={2}>
+          {title}
+        </Text>
+
         <View style={styles.spaceBetween}>
-          <Text style={[FONT.textMd, styles.title]}>{title}</Text>
+          <View style={styles.amount}>
+            <Amount
+              border
+              onChange={selectAmount}
+              defaultValue={amountSelected}
+            />
+
+            <IconButton hasBgColor onPress={() => selectAmount(0)}>
+              <Trash color={COLORS.PURPLE} size={20} />
+            </IconButton>
+          </View>
+
           <Text style={[FONT.titleSm, styles.title]}>RS {handlePrice()}</Text>
-        </View>
-
-        <Text style={[FONT.textSm, styles.ml]}>{sizeSelected}ml</Text>
-
-        <View style={styles.amount}>
-          <Amount
-            border
-            onChange={selectAmount}
-            defaultValue={amountSelected}
-          />
-
-          <IconButton hasBgColor onPress={() => selectAmount(0)}>
-            <Trash color={COLORS.PURPLE} size={20} />
-          </IconButton>
         </View>
       </View>
     </View>

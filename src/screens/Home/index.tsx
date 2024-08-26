@@ -88,17 +88,18 @@ export default function Home() {
 
   const fixedFilterStyle = useAnimatedStyle(() => {
     return {
-      display: scrollY.value <= 460 ? "none" : "flex",
       position: "absolute",
       width: "100%",
-      top: 118,
+      top: 122,
+      opacity: scrollY.value <= 501 ? 0 : 1,
       zIndex: 99,
     };
   });
 
   const filterOpacityStyles = useAnimatedStyle(() => {
     return {
-      opacity: scrollY.value <= 460 ? 1 : 0,
+      opacity: scrollY.value <= 501 ? 1 : 0,
+      zIndex: 99,
     };
   });
 
@@ -151,7 +152,9 @@ export default function Home() {
         fixed ? fixedFilterStyle : filterOpacityStyles,
       ]}
     >
-      <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>Nossos cafés</Text>
+      <Text style={[FONT.titleSm, styles.filterHeaderTitle]}>
+        Nossos produtos
+      </Text>
       <View style={styles.filters}>
         <AnimatedFilter
           style={[styles.filterOption, filterAnimatedStyles([1, 460, 1312])]}
@@ -161,7 +164,7 @@ export default function Home() {
           <Animated.Text
             style={[FONT.tag, filterTextAnimatedStyles([1, 460, 1312])]}
           >
-            TRADICIONAIS
+            PERIFÉRICOS
           </Animated.Text>
         </AnimatedFilter>
         <AnimatedFilter
@@ -172,7 +175,7 @@ export default function Home() {
           <Animated.Text
             style={[FONT.tag, filterTextAnimatedStyles([460, 1312, 1857])]}
           >
-            DOCES
+            GABINETES
           </Animated.Text>
         </AnimatedFilter>
         <AnimatedFilter
@@ -186,7 +189,7 @@ export default function Home() {
           <Animated.Text
             style={[FONT.tag, filterTextAnimatedStyles([1312, 1857, 3000])]}
           >
-            ESPECIAIS
+            DIVERSOS
           </Animated.Text>
         </AnimatedFilter>
       </View>
@@ -221,7 +224,7 @@ export default function Home() {
             >
               <Animated.View entering={FadeInDown.delay(900)}>
                 <Text style={[FONT.titleMd, styles.title]}>
-                  {"Encontre o café perfeito para\nqualquer hora do dia"}
+                  {"Encontre o equipamento\nideal para você!"}
                 </Text>
 
                 <View>

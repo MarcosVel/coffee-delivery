@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: COLORS.GRAY_800,
-    paddingTop: 16,
+    paddingTop: 12,
     paddingLeft: 8,
     paddingRight: 16,
     paddingBottom: 8,
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
   image: {
     width: 96,
     height: 96,
-    top: -36,
+    top: -12,
   },
   info: {
     flex: 1,

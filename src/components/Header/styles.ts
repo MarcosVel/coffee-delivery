@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../styles/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,9 +15,21 @@ export const styles = StyleSheet.create({
     paddingBottom: 20,
     zIndex: 1,
   },
+  user: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: COLORS.PURPLE,
+  },
   location: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: 2,
   },
 });

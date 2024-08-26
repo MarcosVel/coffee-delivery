@@ -26,23 +26,18 @@ export const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   title: {
+    marginRight: 2,
     marginVertical: 16,
     color: COLORS.WHITE,
-  },
-  priceView: {
-    flexDirection: "row",
-    alignItems: "baseline",
-  },
-  price: {
-    color: COLORS.YELLOW_DARK,
   },
   description: {
     color: COLORS.WHITE,
     paddingRight: 12,
   },
   cup: {
-    marginTop: "auto",
-    bottom: -60,
+    width: "100%",
+    maxHeight: 330,
+    bottom: -24,
     zIndex: 1,
   },
   value: {
@@ -55,7 +50,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "baseline",
-    marginTop: 24,
+    marginTop: 32,
   },
   footer: {
     paddingTop: 42,
@@ -70,7 +65,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: COLORS.GRAY_700,
     borderRadius: 6,
-    marginTop: 20,
+    marginTop: 12,
     padding: 8,
     gap: 16,
   },

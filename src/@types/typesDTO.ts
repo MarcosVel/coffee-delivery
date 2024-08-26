@@ -12,7 +12,6 @@ type CartProps = {
   image: number;
   title: string;
   price: number;
-  sizeSelected: number;
   amount: number;
 };
 

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Trash } from "phosphor-react-native";
+import { MapPin, Trash } from "phosphor-react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
@@ -44,6 +44,12 @@ export default function Cart() {
     }, 500);
   }
 
+  function confirm() {
+    cart.map((item) => cartRemove(item.id));
+    setCart([]);
+    navigate("confirmation");
+  }
+
   useEffect(() => {
     fetchHistory();
   }, []);
@@ -82,7 +88,6 @@ export default function Cart() {
                 image={item.image}
                 title={item.title}
                 price={item.price}
-                sizeSelected={item.sizeSelected}
                 amount={item.amount}
               />
             </Swipeable>
@@ -91,6 +96,11 @@ export default function Cart() {
       />
 
       <View style={styles.footer}>
+        <View style={styles.location}>
+          <MapPin size={16} color={COLORS.PURPLE} weight="fill" />
+          <Text style={FONT.textSm}>José Gonçalves Pereira, nº 129</Text>
+        </View>
+
         <View style={styles.flex}>
           <Text style={[FONT.textMd, { color: COLORS.GRAY_200 }]}>
             Valor total
@@ -100,11 +110,7 @@ export default function Cart() {
           </Text>
         </View>
 
-        <Button
-          title="Confirmar pedido"
-          variant="yellow"
-          onPress={() => navigate("confirmation")}
-        />
+        <Button title="Confirmar pedido" onPress={confirm} />
       </View>
     </SafeAreaView>
   );

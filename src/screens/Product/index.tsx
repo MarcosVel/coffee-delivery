@@ -1,8 +1,14 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Alert, Image, SafeAreaView, Text, View } from "react-native";
+import {
+  Alert,
+  Image,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  View,
+} from "react-native";
 import { CartProps, ProductProps } from "../../@types/typesDTO";
-import cup from "../../assets/images/cup.png";
 import { Amount, Button } from "../../components";
 import { AppNavigationProps } from "../../routes/app.routes";
 import { cartAdd } from "../../storage/cartStorage";
@@ -32,6 +38,7 @@ export default function Product() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
       <View style={styles.content}>
         <View style={styles.tag}>
           <Text style={[FONT.tag, styles.tagText]}>{type}</Text>
@@ -41,14 +48,14 @@ export default function Product() {
 
         <Text style={[FONT.textMd, styles.description]}>{description}</Text>
 
-        <Image source={cup} style={styles.cup} />
+        <Image source={image} style={styles.cup} resizeMode="contain" />
       </View>
 
       <View style={styles.footer}>
         <View style={styles.flex}>
           <Text style={styles.value}>Valor:</Text>
           <Text style={[FONT.titleXl, { color: COLORS.GRAY_200 }]}>
-            R$ 9,90
+            {price.toFixed(2).replace(".", ",")}
           </Text>
         </View>
 

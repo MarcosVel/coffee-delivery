@@ -18,16 +18,13 @@ export const styles = StyleSheet.create({
     height: 64,
   },
   spaceBetween: {
+    marginTop: 8,
     flexDirection: "row",
-    alignItems: "baseline",
+    alignItems: "flex-end",
     justifyContent: "space-between",
   },
   title: {
     color: COLORS.GRAY_100,
-  },
-  ml: {
-    top: -2,
-    color: COLORS.GRAY_400,
   },
   amount: {
     flexDirection: "row",

@@ -34,7 +34,9 @@ export default function ListCard({
       <Image source={image} style={styles.image} />
 
       <View style={styles.info}>
-        <Text style={[FONT.titleSm, styles.title]}>{title}</Text>
+        <Text style={[FONT.titleSm, styles.title]} numberOfLines={2}>
+          {title}
+        </Text>
         <Text style={[FONT.textXs, styles.description]} numberOfLines={2}>
           {description}
         </Text>

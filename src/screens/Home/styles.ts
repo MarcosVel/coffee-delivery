@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 2,
     elevation: 2,
-    zIndex: 1,
+    zIndex: 2,
     gap: 12,
   },
   filterHeaderTitle: {
@@ -60,9 +60,9 @@ export const styles = StyleSheet.create({
     paddingTop: 8,
   },
   listContainer: {
-    paddingTop: 8,
+    paddingTop: 12,
     paddingHorizontal: 32,
-    gap: 32,
+    gap: 20,
     marginBottom: 48,
   },
 });

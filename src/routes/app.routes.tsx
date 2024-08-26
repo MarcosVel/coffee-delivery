@@ -5,10 +5,11 @@ import {
 } from "@react-navigation/native-stack";
 import { ArrowLeft } from "phosphor-react-native";
 import { TouchableOpacity } from "react-native";
-import { Cart, Confirmation, Home, Product } from "../screens";
+import { Cart, Confirmation, Home, Login, Product } from "../screens";
 import { COLORS } from "../styles/theme";
 
 type AppRoutes = {
+  login: undefined;
   home: undefined;
   confirmation: undefined;
   cart: undefined;
@@ -32,6 +33,7 @@ export function AppRoutes() {
   return (
     <Navigator>
       <Group screenOptions={{ headerShown: false }}>
+        <Screen name="login" component={Login} />
         <Screen name="home" component={Home} />
         <Screen name="confirmation" component={Confirmation} />
       </Group>

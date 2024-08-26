@@ -53,9 +53,9 @@ export default function Confirmation() {
       <Animated.View
         entering={FadeInDown.delay(500).duration(900).easing(Easing.elastic(1))}
       >
-        <Text style={[FONT.titleLg, styles.title]}>Uhu! Pedido confirmado</Text>
+        <Text style={[FONT.titleLg, styles.title]}>Pedido confirmado!</Text>
         <Text style={[FONT.textSm, styles.description]}>
-          Agora é só aguardar que logo o café{"\n"}chegará até você!
+          Agora é só aguardar que logo o item{"\n"}chegará até você!
         </Text>
       </Animated.View>
 

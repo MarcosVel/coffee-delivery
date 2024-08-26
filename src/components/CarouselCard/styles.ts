@@ -29,10 +29,10 @@ export const styles = StyleSheet.create({
     elevation: 2,
   },
   image: {
-    width: 64,
-    height: 64,
-    marginTop: -16,
-    marginBottom: 16,
+    width: 140,
+    height: 140,
+    marginTop: -48,
+    marginBottom: -4,
   },
   tag: {
     backgroundColor: COLORS.PURPLE_LIGHT,
@@ -57,6 +57,7 @@ export const styles = StyleSheet.create({
   title: {
     color: COLORS.GRAY_200,
     textAlign: "center",
+    marginHorizontal: 8,
   },
   description: {
     fontSize: 12,
